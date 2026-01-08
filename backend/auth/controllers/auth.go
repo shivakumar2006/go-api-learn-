@@ -84,3 +84,50 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		"user":  user,
 	})
 }
+
+func Login(w http.ResponseWriter, r *http.Request) {
+	var reqUser models.User
+
+	if err := json.NewDecoder(r.Body).Decode(&reqUser); err != nil {
+		http.Error(w, "Invalid input", http.StatusBadRequest)
+		return
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	// find the user in DB before login
+	var user models.User
+	err := UserCollection.FindOne(ctx, bson.M{"email": reqUser.Email}).Decode(&user)
+	if err != nil {
+		http.Error(w, "failed to find the user", http.StatusInternalServerError)
+		return
+	}
+
+	// comapare the password
+	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(reqUser.Password))
+	if err != nil {
+		http.Error(w, "email and password are not correct", http.StatusInternalServerError)
+		return
+	}
+
+	// generate token
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"userId": user.ID.Hex(),
+		"exp":    time.Now().Add(time.Minute * 15).Unix(),
+	})
+
+	tokenString, err := token.SignedString(JwtKey)
+	if err != nil {
+		http.Error(w, "failed to generate token", http.StatusInternalServerError)
+		return
+	}
+	user.Password = ""
+
+	// send response
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"token": tokenString,
+		"user":  user,
+	})
+}
