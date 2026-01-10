@@ -1,0 +1,38 @@
+[
+    {
+        "id": "1",
+        "title": "hello from abc",
+        "price": 444,
+        "stock": 2
+    },
+    {
+        "id": "2",
+        "title": "hello from pqr",
+        "price": 556,
+        "stock": 2
+    },
+    {
+        "id": "3",
+        "title": "hello from mno",
+        "price": 666,
+        "stock": 2
+    },
+    {
+        "id": "4",
+        "title": "hello from abc",
+        "price": 444,
+        "stock": 2
+    },
+    {
+        "id": "5",
+        "title": "hello from pqr",
+        "price": 231,
+        "stock": 2
+    },
+    {
+        "id": "6",
+        "title": "hello from abc",
+        "price": 444,
+        "stock": 2
+    }
+]
