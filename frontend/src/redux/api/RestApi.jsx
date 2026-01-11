@@ -12,7 +12,7 @@ export const RestApi = createApi({
         }),
 
         GetAllById: builder.query({
-            query: () => `/rest/${id}`,
+            query: (id) => `/rest/${id}`,
             method: "GET",
         }),
     })

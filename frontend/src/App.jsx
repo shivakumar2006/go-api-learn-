@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Content from './pages/Content';
 import Navbar from './components/Navbar';
+import Details from './pages/Details';
 import { ToastContainer } from 'react-toastify';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/singup' element={<Signup />} />
         <Route path='/content' element={<Content />} />
+        <Route path='/rest/:id' element={<Details />} />
       </Routes>
     </>
   )
