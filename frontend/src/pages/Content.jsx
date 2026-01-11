@@ -4,6 +4,8 @@ import { useGetAllQuery } from '../redux/api/RestApi';
 const Content = () => {
     const { data, isLoading, isError } = useGetAllQuery();
 
+    if (isLoading) return <p>Loading...</p>
+
     console.log("content data: ", data);
     return (
         <div className='min-h-screen bg-[#F7F7F8] flex justify-center items-center flex-wrap'>
